@@ -7,8 +7,8 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class CustomNewBookListItem extends StatelessWidget {
-  const CustomNewBookListItem({super.key, required this.books});
+class NewestBookListView extends StatelessWidget {
+  const NewestBookListView({super.key, required this.books});
   final BookModel books;
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,11 @@
 import 'package:book_app/core/widgets/custom_bext.dart';
-import 'package:book_app/features/home/presentation/view/widgets/smillier_books_list_view.dart';
+import 'package:book_app/features/home/presentation/view/widgets/simular_book_list_view.dart.dart';
 
 import 'package:flutter/material.dart';
 
-class SimmilerBooksDetailes extends StatelessWidget {
-  const SimmilerBooksDetailes({super.key});
+class SimularBookSection extends StatelessWidget {
+  final String category;
+  const SimularBookSection({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class SimmilerBooksDetailes extends StatelessWidget {
           ),
         ),
         SizedBox(height: size.height * .03),
-        const SmillierBooksListview(),
+        SimularBookListView(category: category),
       ],
     );
   }

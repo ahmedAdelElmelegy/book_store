@@ -1,4 +1,4 @@
-import 'package:book_app/core/utils/services_locator.dart';
+import 'package:book_app/core/di/injection.dart';
 import 'package:book_app/features/navigation/presentation/manager/cubit/navigat_betwen_screen_cubit.dart';
 
 import 'package:book_app/features/home/data/Repo/home_repo_imp.dart';

@@ -5,8 +5,8 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 import 'package:flutter/material.dart';
 
-class BookDetailsSection extends StatelessWidget {
-  const BookDetailsSection({super.key, required this.book});
+class BookDetailItem extends StatelessWidget {
+  const BookDetailItem({super.key, required this.book});
   final BookModel book;
   @override
   Widget build(BuildContext context) {

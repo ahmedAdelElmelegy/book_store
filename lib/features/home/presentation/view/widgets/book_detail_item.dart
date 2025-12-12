@@ -2,12 +2,12 @@ import 'package:book_app/features/home/data/models/book_model/book_model.dart';
 import 'package:book_app/features/home/presentation/view/widgets/book_action.dart';
 import 'package:book_app/features/home/presentation/view/widgets/book_rating.dart';
 import 'package:book_app/features/home/presentation/view/widgets/book_details_section.dart';
-import 'package:book_app/features/home/presentation/view/widgets/custom_app_bar_book_detailes_view.dart';
-import 'package:book_app/features/home/presentation/view/widgets/simular_book_detail.dart';
+import 'package:book_app/features/home/presentation/view/widgets/book_detail_action.dart';
+import 'package:book_app/features/home/presentation/view/widgets/simular_book_section.dart';
 import 'package:flutter/material.dart';
 
-class BookViewBody extends StatelessWidget {
-  const BookViewBody({super.key, required this.books});
+class BookDetailBody extends StatelessWidget {
+  const BookDetailBody({super.key, required this.books});
   final BookModel books;
 
   @override
@@ -22,8 +22,8 @@ class BookViewBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(child: SizedBox(height: size.height * .04)),
-                const CustomAppBarBookDetailesView(),
-                BookDetailsSection(book: books),
+                const BookDetailActions(),
+                BookDetailItem(book: books),
                 Expanded(child: SizedBox(height: size.height * .02)),
                 BookRating(
                   count: books.volumeInfo.pageCount.toString(),
@@ -32,7 +32,7 @@ class BookViewBody extends StatelessWidget {
                 Expanded(child: SizedBox(height: size.height * .02)),
                 BookAction(book: books),
                 Expanded(child: SizedBox(height: size.height * .08)),
-                const SimmilerBooksDetailes(),
+                SimularBookSection(category: books.volumeInfo.categories![0]),
                 Expanded(child: SizedBox(height: size.height * .01)),
               ],
             ),

@@ -1,9 +1,11 @@
+import 'package:book_app/core/utils/routes.dart';
+import 'package:book_app/core/widgets/book_item.dart';
 import 'package:book_app/core/widgets/custom_error_failure.dart';
 import 'package:book_app/core/widgets/custom_loading_indicator.dart';
 import 'package:book_app/features/home/presentation/manager/NewsetBookDetailes/newset_book_detiles_cubit.dart';
-import 'package:book_app/features/home/presentation/view/widgets/book_listview_newst.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomNewbookListview extends StatefulWidget {
   const CustomNewbookListview({super.key});
@@ -58,8 +60,12 @@ class _CustomNewbookListviewState extends State<CustomNewbookListview> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: books.length,
-            itemBuilder: (context, index) =>
-                CustomNewBookListItem(books: books[index]),
+            itemBuilder: (context, index) => InkWell(
+              child: BookItem(books: books[index]),
+              onTap: () {
+                context.push(Routes.bookview, extra: books[index]);
+              },
+            ),
           ),
         );
       },

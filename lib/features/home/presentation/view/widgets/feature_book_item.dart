@@ -5,15 +5,14 @@ import 'package:book_app/features/home/presentation/view/widgets/custom_book_ima
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CustomBookImageListview extends StatefulWidget {
-  const CustomBookImageListview({super.key});
+class FeatureBookListView extends StatefulWidget {
+  const FeatureBookListView({super.key});
 
   @override
-  State<CustomBookImageListview> createState() =>
-      _CustomBookImageListviewState();
+  State<FeatureBookListView> createState() => _FeatureBookListViewState();
 }
 
-class _CustomBookImageListviewState extends State<CustomBookImageListview> {
+class _FeatureBookListViewState extends State<FeatureBookListView> {
   late ScrollController _scrollController;
   int nextPageNumber = 1;
   bool _isFetching = false; // to prevent multiple simultaneous calls
@@ -82,7 +81,7 @@ class _CustomBookImageListviewState extends State<CustomBookImageListview> {
                 if (index < cubit.bookList.length) {
                   final book = cubit.bookList[index];
                   if (book != null) {
-                    return CustomBookImageListItem(books: book);
+                    return FeatureBookItem(books: book);
                   }
                   return const SizedBox();
                 } else {

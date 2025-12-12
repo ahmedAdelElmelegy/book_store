@@ -3,8 +3,8 @@ import 'package:book_app/features/home/data/models/book_model/book_model.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
-class CustomBookImageListItem extends StatelessWidget {
-  const CustomBookImageListItem({super.key, required this.books});
+class FeatureBookItem extends StatelessWidget {
+  const FeatureBookItem({super.key, required this.books});
   final BookModel books;
 
   @override

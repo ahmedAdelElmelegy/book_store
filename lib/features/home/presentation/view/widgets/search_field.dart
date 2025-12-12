@@ -1,9 +1,10 @@
+import 'package:book_app/core/utils/routes.dart';
+import 'package:book_app/core/widgets/book_item.dart';
 import 'package:book_app/core/widgets/custom_error_failure.dart';
 import 'package:book_app/core/widgets/custom_loading_indicator.dart';
 import 'package:book_app/core/widgets/custom_text_field.dart';
 import 'package:book_app/features/home/data/models/book_model/book_model.dart';
 import 'package:book_app/features/home/presentation/manager/NewsetBookDetailes/newset_book_detiles_cubit.dart';
-import 'package:book_app/features/home/presentation/view/widgets/book_listview_newst.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -71,7 +72,10 @@ class _SearchPageState extends State<SearchPage> {
                       itemCount: filterBooks.isNotEmpty
                           ? filterBooks.length
                           : state.books.length,
-                      itemBuilder: (context, index) => CustomNewBookListItem(
+                      itemBuilder: (context, index) => BookItem(
+                        onTap: () {
+                          context.push(Routes.bookview, extra: books[index]);
+                        },
                         books: filterBooks.isNotEmpty
                             ? filterBooks[index]
                             : state.books[index],

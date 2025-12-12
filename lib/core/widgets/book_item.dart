@@ -14,9 +14,7 @@ class BookItem extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: onTap,
-      // onTap: () {
-      //   GoRouter.of(context).push(bookview, extra: books);
-      // },
+
       child: Padding(
         padding: const EdgeInsets.only(bottom: 15),
         child: SizedBox(
