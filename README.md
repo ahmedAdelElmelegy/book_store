@@ -1,16 +1,107 @@
-# book_store
+# 📚 **Book App – Flutter Application**
 
-A new Flutter project.
+A modern Flutter mobile application for browsing and exploring books with categories, search, pagination, and clean UI.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🖼 **App Screenshots**
 
-A few resources to get you started if this is your first Flutter project:
+Add your app images here in Canva by replacing the placeholders:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## App Screenshots
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Home Screen                                 | Category Screen                                     |
+| ------------------------------------------- | --------------------------------------------------- |
+| ![Home](assets/images/screenshots/home.jpg) | ![Category](assets/images/screenshots/category.jpg) |
+
+| Book Details                                     | Search Screen                                   | Profile Screen                                    |
+| ------------------------------------------------ | ----------------------------------------------- | ------------------------------------------------- |
+| ![Details](assets/images/screenshots/detail.jpg) | ![Search](assets/images/screenshots/search.jpg) | ![Profile](assets/images/screenshots/profile.jpg) |
+
+---
+
+## 🚀 **Features**
+
+* Browse books in multiple categories (Programming, Science, Sports, Egypt...)
+* Search bar with instant filtering
+* Pagination for infinite scroll
+* MVVM architecture
+* Bloc/Cubit state management
+* URL Launcher to open book links
+* Clean navigation using go_router
+* Dependency Injection with get_it
+
+---
+
+## 📦 **Packages Used**
+
+```
+bloc: ^8.1.2
+cupertino_icons: ^1.0.2
+curved_navigation_bar: ^1.0.3
+dartz: ^0.10.1
+dio: ^5.4.0
+equatable: ^2.0.5
+fancy_shimmer_image: ^2.0.3
+flutter_bloc: ^8.1.3
+flutter_getit: ^1.2.1
+flutter_iconly: ^1.0.2
+flutter_launcher_icons: ^0.14.4
+font_awesome_flutter: ^10.6.0
+get_it: ^7.6.4
+go_router: ^12.1.3
+shared_preferences: ^2.2.2
+url_launcher: ^6.3.2
+```
+
+---
+
+## 🏗 **Architecture – MVVM**
+
+```
+lib/
+ └── features/
+      └── home/
+           ├── data/
+           ├── domain/
+           └── presentation/
+ └── core/
+      ├── di/
+      ├── network/
+      └── widgets/
+```
+
+---
+
+## ▶ **Launch Book URL**
+
+```dart
+launchUrl(Uri.parse(bookUrl));
+```
+
+---
+
+## 🛠 **Run the App**
+
+```bash
+flutter pub get
+flutter run
+```
+
+---
+
+## 🎨 **Add Images Instructions (For Canva)**
+
+1. Copy this README into Canva's document editor.
+2. Replace every **PLACEHOLDER_*** with your app's screenshot.
+3. Export as PNG or PDF.
+
+---
+
+## 🤝 **Contributing**
+
+Pull requests are welcome.
+
+## 📄 **License**
+
+Open source under MIT License.
