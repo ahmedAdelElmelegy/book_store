@@ -35,37 +35,48 @@ class _CategoryViewState extends State<CategoryView> {
     super.didUpdateWidget(oldWidget);
   }
 
+  late ScrollController _scrollController;
+  int nextPageNumber = 1;
+  bool _isFetching = false; // to prevent multiple simultaneous calls
+
   @override
   void initState() {
-    _scrollController = ScrollController();
-    _scrollController.addListener(_scroolListener);
-
-    context.read<CategorybookCubit>().fetchCategoryBooks(
-      category: widget.category,
-      pageNumber: 0,
-    );
     super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CategorybookCubit>().fetchCategoryBooks(
+        category: widget.category,
+        pageNumber: nextPageNumber++,
+      );
+    });
   }
 
-  late ScrollController _scrollController;
-
-  int nextPagenumber = 1;
   @override
   void dispose() {
-    _scrollController.removeListener(_scroolListener); // ✅ Remove listener
-
+    _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
     super.dispose();
   }
 
-  // scrool
-  void _scroolListener() {
-    final currentPostion = _scrollController.position.pixels;
-    if (currentPostion >= .7 * _scrollController.position.maxScrollExtent) {
-      context.read<CategorybookCubit>().fetchCategoryBooks(
-        category: widget.category,
-        pageNumber: nextPagenumber++,
-      );
+  Future<void> _scrollListener() async {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+
+    if (!_isFetching && currentScroll >= 0.7 * maxScroll) {
+      _isFetching = true;
+
+      try {
+        await context.read<CategorybookCubit>().fetchCategoryBooks(
+          category: widget.category,
+          pageNumber: nextPageNumber++,
+        );
+      } catch (e) {
+        // Handle Dio errors here if needed
+      } finally {
+        _isFetching = false;
+      }
     }
   }
 
@@ -85,18 +96,30 @@ class _CategoryViewState extends State<CategoryView> {
                 shrinkWrap: true,
                 itemCount: filterBooks.isNotEmpty
                     ? filterBooks.length
-                    : books.length,
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {},
-                  child: BookItem(
-                    onTap: () {
-                      context.push(Routes.bookview, extra: books[index]);
-                    },
-                    books: filterBooks.isNotEmpty
-                        ? filterBooks[index]
-                        : books[index],
-                  ),
-                ),
+                    : books.length + (state is CategorybookLoadingMore ? 1 : 0),
+                itemBuilder: (context, index) {
+                  if (index < books.length) {
+                    if (books.isNotEmpty) {
+                      return GestureDetector(
+                        onTap: () {},
+                        child: BookItem(
+                          onTap: () {
+                            context.push(Routes.bookview, extra: books[index]);
+                          },
+                          books: filterBooks.isNotEmpty
+                              ? filterBooks[index]
+                              : books[index],
+                        ),
+                      );
+                    }
+                    return const SizedBox();
+                  } else {
+                    return const SizedBox(
+                      width: 60,
+                      child: CustomLoadingIndicator(),
+                    );
+                  }
+                },
               ),
             );
           } else if (state is CategorybookFailure) {
@@ -122,6 +145,8 @@ class _CategoryViewState extends State<CategoryView> {
 
   PreferredSizeWidget searchicon(String category) {
     return AppBar(
+      // backgroundColor: Colors.white, // Fixed color
+      scrolledUnderElevation: 0,
       leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
       title: Text(category, style: AppStyle.f24UrbanistBold),
       centerTitle: true,
@@ -140,6 +165,8 @@ class _CategoryViewState extends State<CategoryView> {
   PreferredSizeWidget appText() {
     return AppBar(
       automaticallyImplyLeading: false,
+      backgroundColor: Colors.white, // Fixed color
+      elevation: 0, // Optional: remove shadow if you want
       title: CustomTextField(
         hintText: "Science",
         onChanged: (input) {

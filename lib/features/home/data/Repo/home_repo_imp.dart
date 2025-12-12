@@ -34,7 +34,7 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<BookModel>>> fetchFeaturedBooks({
+  Future<Either<Failure, List<BookModel?>>> fetchFeaturedBooks({
     int pageNumber = 0,
   }) async {
     try {
@@ -42,10 +42,14 @@ class HomeRepoImpl implements HomeRepo {
         endPoint:
             'volumes?Filtering=free-ebooks&q=subject:egypt&startIndex=${pageNumber * 10}',
       );
-      List<BookModel> books = [];
-      for (var item in data['items']) {
-        books.add(BookModel.fromJson(item));
+      List<BookModel?> books = [];
+      var items = data['items'] as List<dynamic>?; // null-aware cast
+      if (items != null) {
+        for (var item in data['items']) {
+          books.add(BookModel.fromJson(item));
+        }
       }
+
       return right(books);
     } catch (e) {
       if (e is DioException) {

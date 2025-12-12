@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:book_app/features/Science/presentation/view/science_view.dart';
+import 'package:book_app/features/category/presentation/view/category_view.dart';
 import 'package:book_app/features/home/presentation/view/home.dart';
 import 'package:book_app/features/profile/presentation/view/profile_view.dart';
 import 'package:flutter/material.dart';

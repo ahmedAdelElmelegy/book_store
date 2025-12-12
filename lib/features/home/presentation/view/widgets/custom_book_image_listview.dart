@@ -15,52 +15,84 @@ class CustomBookImageListview extends StatefulWidget {
 
 class _CustomBookImageListviewState extends State<CustomBookImageListview> {
   late ScrollController _scrollController;
+  int nextPageNumber = 1;
+  bool _isFetching = false; // to prevent multiple simultaneous calls
+
   @override
   void initState() {
-    _scrollController = ScrollController();
-    _scrollController.addListener(_scroolListener);
-
     super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FeaturesBookDetailsCubit>().fetchFeaturesBooks(
+        pageNumber: nextPageNumber++,
+      );
+    });
   }
 
-  int nextPagenumber = 1;
   @override
   void dispose() {
-    _scrollController.removeListener(_scroolListener); // ✅ Remove listener
-
+    _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
     super.dispose();
   }
 
-  // scrool
-  void _scroolListener() {
-    final currentPostion = _scrollController.position.pixels;
-    if (currentPostion >= .7 * _scrollController.position.maxScrollExtent) {
-      context.read<FeaturesBookDetailsCubit>().fetchFeaturesBooks(
-        pageNumber: nextPagenumber++,
-      );
+  Future<void> _scrollListener() async {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+
+    if (!_isFetching && currentScroll >= 0.7 * maxScroll) {
+      _isFetching = true;
+
+      try {
+        await context.read<FeaturesBookDetailsCubit>().fetchFeaturesBooks(
+          pageNumber: nextPageNumber++,
+        );
+      } catch (e) {
+        // Handle Dio errors here if needed
+      } finally {
+        _isFetching = false;
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
+
     return BlocBuilder<FeaturesBookDetailsCubit, FeaturesBookDetailsState>(
       builder: (context, state) {
         final cubit = context.read<FeaturesBookDetailsCubit>();
+
         if (state is FeaturesBookDetailsFailure) {
           return CustomErorrFailure(failureMassage: state.erorrMassage);
-        } else if (state is FeaturesBookDetailsSucess ||
-            state is PagenationLoading) {
+        }
+
+        if (state is FeaturesBookDetailsSucess || state is PagenationLoading) {
           return SizedBox(
-            height: size.height * .33,
+            height: size.height * 0.33,
             child: ListView.builder(
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: cubit.bookList.length,
               physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) =>
-                  CustomBookImageListItem(books: cubit.bookList[index]),
+              itemCount:
+                  cubit.bookList.length + (state is PagenationLoading ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (index < cubit.bookList.length) {
+                  final book = cubit.bookList[index];
+                  if (book != null) {
+                    return CustomBookImageListItem(books: book);
+                  }
+                  return const SizedBox();
+                } else {
+                  // Pagination loading indicator at the end
+                  return const SizedBox(
+                    width: 60,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+              },
             ),
           );
         }

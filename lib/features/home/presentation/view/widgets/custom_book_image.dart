@@ -22,6 +22,7 @@ class CustomBookImageListItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: FancyShimmerImage(
                   imageUrl: books.volumeInfo.imageLinks?.thumbnail ?? '',
+                  errorWidget: Icon(Icons.error, color: Colors.red),
                 ),
               ),
             ),

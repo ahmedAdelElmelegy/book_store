@@ -21,7 +21,7 @@ final class FeaturesBookDetailsFailure extends FeaturesBookDetailsState {
 }
 
 final class FeaturesBookDetailsSucess extends FeaturesBookDetailsState {
-  final List<BookModel> books;
+  final List<BookModel?> books;
 
   const FeaturesBookDetailsSucess({required this.books});
 }

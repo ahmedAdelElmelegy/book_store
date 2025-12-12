@@ -8,7 +8,7 @@ part 'features_book_details_state.dart';
 class FeaturesBookDetailsCubit extends Cubit<FeaturesBookDetailsState> {
   FeaturesBookDetailsCubit(this.homeRepo) : super(FeaturesBookDetailsInitial());
   final HomeRepo homeRepo;
-  List<BookModel> bookList = [];
+  List<BookModel?> bookList = [];
   Future<void> fetchFeaturesBooks({int pageNumber = 0}) async {
     if (pageNumber == 0) {
       emit(FeaturesBookDetailsLoading());
