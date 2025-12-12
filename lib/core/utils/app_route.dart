@@ -1,5 +1,5 @@
 import 'package:book_app/core/utils/api_services.dart';
-import 'package:book_app/features/Navgat_home/presentation/view/navigate_home.dart';
+import 'package:book_app/features/navigation/presentation/view/navigate_home.dart';
 import 'package:book_app/features/Splash/presentation/view/splash_view.dart';
 import 'package:book_app/features/home/data/Repo/home_repo_imp.dart';
 import 'package:book_app/features/home/data/models/book_model/book_model.dart';
