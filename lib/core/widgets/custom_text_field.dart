@@ -4,7 +4,7 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.hintText,
-    this.icon,
+    this.suffixicon,
     this.controller,
     this.validator,
     this.onChanged,
@@ -12,7 +12,7 @@ class CustomTextField extends StatelessWidget {
     this.fillcolor,
   });
   final String hintText;
-  final IconData? icon;
+  final Widget? suffixicon;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
@@ -27,23 +27,25 @@ class CustomTextField extends StatelessWidget {
       onChanged: onChanged,
       onFieldSubmitted: onFieldSubmitted,
       decoration: InputDecoration(
-          hintText: hintText,
-          prefixIconColor: Colors.grey,
-          // fillColor: fillcolor ?? Colors.white,
-          suffixIcon: Icon(icon),
-          filled: true,
-          // prefixIcon: Icon(icon),
-          hintStyle: const TextStyle(color: Colors.grey),
-          contentPadding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-          border: outineMethod(),
-          enabledBorder: outineMethod(),
-          focusedBorder: outineMethod()),
+        hintText: hintText,
+        prefixIconColor: Colors.grey,
+        // fillColor: fillcolor ?? Colors.white,
+        suffixIcon: suffixicon,
+        filled: true,
+        // prefixIcon: Icon(icon),
+        hintStyle: const TextStyle(color: Colors.grey),
+        contentPadding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+        border: outineMethod(),
+        enabledBorder: outineMethod(),
+        focusedBorder: outineMethod(),
+      ),
     );
   }
 
   OutlineInputBorder outineMethod() {
     return OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20),
-        borderSide: BorderSide(color: Colors.grey));
+      borderRadius: BorderRadius.circular(8),
+      borderSide: BorderSide(color: Colors.grey),
+    );
   }
 }

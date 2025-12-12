@@ -83,7 +83,9 @@ class _CategoryViewState extends State<CategoryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: isSearch ? appText() : searchicon(widget.category),
+      appBar: isSearch
+          ? appTextField(widget.category)
+          : searchicon(widget.category),
       body: BlocBuilder<CategorybookCubit, CategorybookState>(
         builder: (context, state) {
           if (state is CategorybookSucess || state is CategorybookLoadingMore) {
@@ -162,28 +164,27 @@ class _CategoryViewState extends State<CategoryView> {
     );
   }
 
-  PreferredSizeWidget appText() {
+  PreferredSizeWidget appTextField(String category) {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white, // Fixed color
       elevation: 0, // Optional: remove shadow if you want
       title: CustomTextField(
-        hintText: "Science",
+        hintText: category,
         onChanged: (input) {
           addDatatoFilteredData(input: input);
         },
-        controller: searchController,
-      ),
-      actions: [
-        IconButton(
-          onPressed: () {
+        suffixicon: InkWell(
+          onTap: () {
             setState(() {
               searchController.text = "";
+              isSearch = false;
             });
           },
-          icon: const Icon(Icons.clear, color: Colors.red),
+          child: Icon(Icons.clear, color: Colors.red),
         ),
-      ],
+        controller: searchController,
+      ),
     );
   }
 }
