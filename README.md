@@ -63,11 +63,13 @@ lib/
  └── features/
       └── home/
            ├── data/
-           ├── domain/
            └── presentation/
  └── core/
       ├── di/
       ├── network/
+      ├── utils/
+      ├── error/
+      ├── function/
       └── widgets/
 ```
 
@@ -88,20 +90,3 @@ flutter pub get
 flutter run
 ```
 
----
-
-## 🎨 **Add Images Instructions (For Canva)**
-
-1. Copy this README into Canva's document editor.
-2. Replace every **PLACEHOLDER_*** with your app's screenshot.
-3. Export as PNG or PDF.
-
----
-
-## 🤝 **Contributing**
-
-Pull requests are welcome.
-
-## 📄 **License**
-
-Open source under MIT License.
