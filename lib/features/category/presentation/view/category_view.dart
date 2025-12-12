@@ -93,7 +93,7 @@ class _CategoryViewState extends State<CategoryView> {
               child: ListView.builder(
                 controller: _scrollController,
                 physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
+
                 itemCount: filterBooks.isNotEmpty
                     ? filterBooks.length
                     : books.length + (state is CategorybookLoadingMore ? 1 : 0),
